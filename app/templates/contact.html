@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты - Top-Staff</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .header {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand img {
+            height: 40px;
+        }
+
+        .nav-link {
+            color: #333 !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #007bff !important;
+        }
+
+        .footer {
+            background: #333;
+            color: white;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+
+        .footer-link {
+            color: #ccc;
+            text-decoration: none;
+        }
+
+        .footer-link:hover {
+            color: white;
+        }
+
+
+        .contact-hero {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            color: white;
+            padding: 60px 0 40px;
+            margin-bottom: 0;
+        }
+
+        .contact-hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info-cards {
+            margin-top: -30px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .contact-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: none;
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .contact-card i {
+            color: #007bff;
+            margin-bottom: 1rem;
+        }
+
+        .contact-card h5 {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-card p {
+            color: #666;
+            margin: 0;
+        }
+
+        /* Map container: ТУТ БЫЛ ФИКС */
+        .map-container {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            /* ХУНЯ */
+            z-index: 1;
+        }
+
+        #map {
+            height: 100% !important;
+            width: 100% !important;
+            border-radius: 15px;
+            position: relative;
+
+            z-index: 1;
+        }
+
+        /* Фикс для этого куска гоовна */
+        .leaflet-container {
+            height: 100% !important;
+            width: 100% !important;
+        }
+
+        .contact-form {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .contact-form h2 {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+            color: white;
+        }
+
+        .section-padding {
+            padding: 60px 0;
+        }
+
+        .working-hours {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .office-info {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .office-info h3 {
+            color: #007bff;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0.5rem 0;
+        }
+
+        .info-item i {
+            color: #007bff;
+            width: 30px;
+            text-align: center;
+            margin-right: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .info-item span {
+            color: #333;
+            font-weight: 500;
+        }
+
+        .container {
+            max-width: 1200px;
+        }
+
+
+        .custom-marker {
+            background: none !important;
+            border: none !important;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='40' viewBox='0 0 120 40'%3E%3Crect width='120' height='40' fill='%23007bff'/%3E%3Ctext x='60' y='25' font-family='Arial' font-size='16' font-weight='bold' text-anchor='middle' fill='white'%3ETop-Staff%3C/text%3E%3C/svg%3E" alt="Top-Staff Logo" height="40">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">О нас</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Вакансии</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Легализация</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('blog.index') }}">Блог</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" style="color: #007bff !important;">Контакты</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="contact-hero">
+            <div class="container">
+                <div class="row justify-content-center text-center">
+                    <div class="col-lg-8">
+                        <h1>Свяжитесь с нами</h1>
+                        <p class="lead">Мы готовы помочь вам найти работу в Польше. Свяжитесь с нами любым удобным способом.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-info-cards">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card contact-card">
+                            <i class="fas fa-map-marker-alt fa-3x"></i>
+                            <h5>Наш офис</h5>
+                            <p>Люблин, ул. Graniczna 4/22<br>Польша</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card contact-card">
+                            <i class="fas fa-phone fa-3x"></i>
+                            <h5>Телефон</h5>
+                            <p>+mafaka6</p>
+                            <small class="text-muted">Звонки и WhatsApp</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card contact-card">
+                            <i class="fas fa-clock fa-3x"></i>
+                            <h5>Часы работы</h5>
+                            <p>Понедельник – Пятница<br>09:00 – 17:00</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding">
+            <div class="container">
+                <div class="row g-5">
+                    <div class="col-lg-6">
+                        <div class="office-info">
+                            <h3><i class="fas fa-building me-2"></i>Наш офис в Люблине</h3>
+                            <div class="info-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>уmafaka, Люблин, Польша</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-phone"></i>
+                                <span>+mafaka6</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>info@mafaka</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-globe"></i>
+                                <span>website.mafaka</span>
+                            </div>
+                        </div>
+                        
+                        <div class="map-container">
+                            <div id="map"></div>
+                        </div>
+                        
+                        <div class="working-hours">
+                            <h4><i class="fas fa-clock me-2"></i>График работы</h4>
+                            <div class="row text-center mt-3">
+                                <div class="col-6">
+                                    <strong>Будние дни</strong><br>
+                                    <span class="text-success">09:00 - 17:00</span>
+                                </div>
+                                <div class="col-6">
+                                    <strong>Выходные</strong><br>
+                                    <span class="text-danger">Выходной</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="contact-form">
+                            <h2><i class="fas fa-envelope me-2"></i>Отправить сообщение</h2>
+                            <p class="text-muted mb-4">Заполните форму ниже, и мы свяжемся с вами в ближайшее время</p>
+                            
+                            <form id="contactForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="firstName" class="form-label">Имя *</label>
+                                        <input type="text" class="form-control" id="firstName" name="firstName" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="lastName" class="form-label">Фамилия</label>
+                                        <input type="text" class="form-control" id="lastName" name="lastName">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email *</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Телефон</label>
+                                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="+48...">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="subject" class="form-label">Тема обращения</label>
+                                    <select class="form-control" id="subject" name="subject">
+                                        <option value="">Выберите тему</option>
+                                        <option value="job">Поиск работы</option>
+                                        <option value="legalization">Легализация документов</option>
+                                        <option value="consultation">Консультация</option>
+                                        <option value="other">Другое</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label for="message" class="form-label">Сообщение *</label>
+                                    <textarea class="form-control" id="message" name="message" rows="5" required 
+                                              placeholder="Расскажите подробнее о том, как мы можем вам помочь..."></textarea>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="fas fa-paper-plane me-2"></i>Отправить сообщение
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="text-center">
+                            <h4 class="mt-4 mb-3">Мы в социальных сетях</h4>
+                            <div class="social-links">
+                                <a href="https://facebook.com/topstaff" class="social-link" target="_blank">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="https://instagram.com/topstaff" class="social-link" target="_blank">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="https://t.me/topstaff" class="social-link" target="_blank">
+                                    <i class="fab fa-telegram-plane"></i>
+                                </a>
+                                <a href="viber://chat?number=+48799363316" class="social-link">
+                                    <i class="fab fa-viber"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2024 Top-Staff. Все права защищены.</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="#" class="footer-link">Политика конфиденциальности</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+            setTimeout(() => {
+                try {
+                    // Lublin coordinates
+                    const lublinLat = 51.2465;
+                    const lublinLng = 22.5684;
+                    
+                    const map = L.map('map', {
+                        center: [lublinLat, lublinLng],
+                        zoom: 15,
+                        scrollWheelZoom: false,
+                        zoomControl: true,
+                        attributionControl: true
+                    });
+
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '© OpenStreetMap contributors',
+                        maxZoom: 18
+                    }).addTo(map);
+
+                    const customIcon = L.divIcon({
+                        html: '<i class="fas fa-map-marker-alt" style="color: #007bff; font-size: 30px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);"></i>',
+                        iconSize: [30, 30],
+                        iconAnchor: [15, 30],
+                        popupAnchor: [0, -30],
+                        className: 'custom-marker'
+                    });
+
+                    // marker
+                    const marker = L.marker([lublinLat, lublinLng], { 
+                        icon: customIcon 
+                    }).addTo(map);
+
+                    // popup
+                    marker.bindPopup(`
+                        <div style="text-align: center; padding: 10px; min-width: 200px;">
+                            <h6 style="margin-bottom: 10px;"><strong>Top-Staff</strong></h6>
+                            <p style="margin: 5px 0; color: #666;">ул. Graniczna 4/22</p>
+                            <p style="margin: 5px 0; color: #666;">Люблин, Польша</p>
+                            <p style="margin: 10px 0 5px 0; color: #007bff; font-weight: bold;">+48 799 363 316</p>
+                            <small style="color: #999;">Пн-Пт: 09:00-17:00</small>
+                        </div>
+                    `).openPopup();
+
+                    setTimeout(() => {
+                        map.invalidateSize();
+                    }, 100);
+
+                    window.addEventListener('resize', () => {
+                        setTimeout(() => {
+                            map.invalidateSize();
+                        }, 200);
+                    });
+
+                } catch (error) {
+                    console.error('Error initializing map:', error);
+                    const mapElement = document.getElementById('map');
+                    if (mapElement) {
+                        mapElement.innerHTML = `
+                            <div class="alert alert-warning h-100 d-flex align-items-center justify-content-center m-0" style="border-radius: 15px;">
+                                <div class="text-center">
+                                    <i class="fas fa-map-marker-alt fa-2x text-muted mb-2"></i>
+                                    <p class="mb-0">Карта временно недоступна</p>
+                                    <small class="text-muted">ул. Graniczna 4/22, Люблин</small>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+            }, 300);
+        });
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // валидация
+            const requiredFields = ['firstName', 'email', 'message'];
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                const input = document.getElementById(field);
+                if (!input.value.trim()) {
+                    input.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    input.classList.remove('is-invalid');
+                }
+            });
+            
+            if (isValid) {
+                
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Отправляем...';
+                
+                setTimeout(() => {
+                    alert('Спасибо за ваше сообщение! Мы свяжемся с вами в ближайшее время.');
+                    this.reset();
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                }, 1000);
+            } else {
+                alert('Пожалуйста, заполните все обязательные поля.');
+            }
+        });
+
+        // КРасивый скролл
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
