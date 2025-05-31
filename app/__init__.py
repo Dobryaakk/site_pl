@@ -14,13 +14,11 @@ def create_app(config_class):
     app = Flask(__name__)
     app.config.from_object(config_class)
     
-    # Initialize extensions
     mongo.init_app(app)
     login_manager.init_app(app)
     limiter.init_app(app)
     csrf.init_app(app)
     
-    # Set up login manager
     login_manager.login_view = 'auth.login'
     login_manager.login_message_category = 'info'
     
@@ -30,7 +28,7 @@ def create_app(config_class):
     def load_user(user_id):
         return User.get_user(mongo, user_id)
     
-    # Register blueprints
+    # blueprints
     from app.routes import auth, blog, admin, main
     app.register_blueprint(auth.bp)
     app.register_blueprint(blog.bp)

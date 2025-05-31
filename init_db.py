@@ -5,7 +5,6 @@ from config import Config
 def init_db():
     app = create_app(Config)
     with app.app_context():
-        # Check if admin user exists
         if not mongo.db.users.find_one({'username': 'admin'}):
             User.create_user(mongo, 'admin', 'admin123', role='admin')
             print("Admin user created successfully!")

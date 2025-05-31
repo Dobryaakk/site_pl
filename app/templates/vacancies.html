@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="vacancies-hero">
+    <div class="container">
+        <h1 class="display-4 fw-bold text-center mb-4">Вакансии в Польше</h1>
+        <p class="lead text-center mb-5">Найдите работу своей мечты с помощью Top-Staff</p>
+        
+        <div class="search-container mb-5">
+            <div class="input-group">
+                <input type="text" class="form-control form-control-lg" placeholder="Поиск вакансий...">
+                <button class="btn btn-primary btn-lg" type="button">Найти</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="vacancy-filters mb-4">
+                <button class="btn btn-outline-dark me-2 mb-2">Все вакансии</button>
+                <button class="btn btn-outline-dark me-2 mb-2">Производство</button>
+                <button class="btn btn-outline-dark me-2 mb-2">Логистика</button>
+                <button class="btn btn-outline-dark me-2 mb-2">IT</button>
+                <button class="btn btn-outline-dark mb-2">Строительство</button>
+            </div>
+
+            <div class="vacancy-list">
+                <article class="vacancy-card">
+                    <div class="vacancy-meta">
+                        <span class="badge bg-primary me-2">Новая</span>
+                        <span class="text-muted">Lorem ipsum</span>
+                    </div>
+                    <h2 class="vacancy-title">Lorem ipsum dolor sit amet</h2>
+                    <p class="vacancy-excerpt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <div class="vacancy-details">
+                        <span class="me-3"><i class="fas fa-map-marker-alt"></i> Lorem</span>
+                        <span class="me-3"><i class="fas fa-money-bill-wave"></i> 0000-0000 PLN</span>
+                        <span><i class="fas fa-clock"></i> Lorem ipsum</span>
+                    </div>
+                </article>
+
+                <article class="vacancy-card">
+                    <div class="vacancy-meta">
+                        <span class="text-muted">Lorem ipsum</span>
+                    </div>
+                    <h2 class="vacancy-title">Consectetur adipiscing elit</h2>
+                    <p class="vacancy-excerpt">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    <div class="vacancy-details">
+                        <span class="me-3"><i class="fas fa-map-marker-alt"></i> Lorem</span>
+                        <span class="me-3"><i class="fas fa-money-bill-wave"></i> 0000-0000 PLN</span>
+                        <span><i class="fas fa-clock"></i> Lorem ipsum</span>
+                    </div>
+                </article>
+
+                <article class="vacancy-card">
+                    <div class="vacancy-meta">
+                        <span class="text-muted">Lorem ipsum</span>
+                    </div>
+                    <h2 class="vacancy-title">Sed do eiusmod tempor</h2>
+                    <p class="vacancy-excerpt">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                    <div class="vacancy-details">
+                        <span class="me-3"><i class="fas fa-map-marker-alt"></i> Lorem</span>
+                        <span class="me-3"><i class="fas fa-money-bill-wave"></i> 0000-0000 PLN</span>
+                        <span><i class="fas fa-clock"></i> Lorem ipsum</span>
+                    </div>
+                </article>
+            </div>
+
+            <div class="pagination justify-content-center mt-5">
+                <button class="btn btn-outline-dark me-2">Предыдущая</button>
+                <button class="btn btn-dark me-2">1</button>
+                <button class="btn btn-outline-dark me-2">2</button>
+                <button class="btn btn-outline-dark me-2">3</button>
+                <button class="btn btn-outline-dark">Следующая</button>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="sidebar-card">
+                <h3>Почему Top-Staff?</h3>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-check text-success me-2"></i> Официальное трудоустройство</li>
+                    <li><i class="fas fa-check text-success me-2"></i> Помощь с документами</li>
+                    <li><i class="fas fa-check text-success me-2"></i> Бесплатный подбор вакансий</li>
+                    <li><i class="fas fa-check text-success me-2"></i> Поддержка 24/7</li>
+                </ul>
+            </div>
+
+            <div class="sidebar-card mt-4">
+                <h3>Нужна консультация?</h3>
+                <p>Оставьте свои контакты, и мы свяжемся с вами в ближайшее время</p>
+                <form>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" placeholder="Ваше имя">
+                    </div>
+                    <div class="mb-3">
+                        <input type="tel" class="form-control" placeholder="Телефон">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Получить консультацию</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

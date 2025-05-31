@@ -1,4 +1,3 @@
-/* Общие стили */
 :root {
     --primary-color: #2557a7;
     --secondary-color: #666;
@@ -19,7 +18,6 @@ body {
     background-color: var(--background-color);
 }
 
-/* Header */
 .header {
     background-color: white;
     box-shadow: 0 1px 4px rgba(0,0,0,0.1);
@@ -54,13 +52,11 @@ body {
     color: var(--primary-color) !important;
 }
 
-/* Main Content Spacing */
 main {
     margin-top: 76px; /* Header height + padding */
     min-height: calc(100vh - 76px - 100px); /* Full height minus header and footer */
 }
 
-/* Hero Section */
 .hero-section {
     background: linear-gradient(135deg, var(--primary-color), #1e3c72);
     color: white;
@@ -79,7 +75,6 @@ main {
     opacity: 0.9;
 }
 
-/* Cards & Sections */
 .card {
     border: none;
     border-radius: 8px;
@@ -99,7 +94,6 @@ main {
     color: var(--dark-color);
 }
 
-/* About Page Specific */
 .about-page {
     max-width: 1200px;
     margin: 0 auto;
@@ -147,7 +141,6 @@ main {
     transform: translateY(-5px);
 }
 
-/* Buttons */
 .btn {
     padding: 0.75rem 1.5rem;
     font-weight: 500;
@@ -177,7 +170,6 @@ main {
     transform: translateY(-1px);
 }
 
-/* Footer */
 .footer {
     background-color: white;
     padding: 2rem 0;
@@ -201,7 +193,7 @@ main {
     text-decoration: underline;
 }
 
-/* Responsive Design */
+/* Адаптивность к мобилкам */
 @media (max-width: 768px) {
     .hero-section {
         padding: 3rem 0;
@@ -225,7 +217,7 @@ main {
     }
 }
 
-/* Animations */
+/* Анимация */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -241,7 +233,7 @@ main {
     animation: fadeIn 0.5s ease forwards;
 }
 
-/* Vacancies */
+/* Вакансии */
 .vacancy-card {
     background-color: white;
     border: 1px solid var(--border-color);
@@ -284,7 +276,7 @@ main {
     padding: 0.5rem 0.75rem;
 }
 
-/* Legalization */
+/* Легализация */
 .legalization-card {
     background-color: white;
     border: 1px solid var(--border-color);
@@ -318,7 +310,7 @@ main {
     color: var(--primary-color);
 }
 
-/* Contact Form */
+/* контакт форма */
 .contact-info {
     background-color: white;
     border: 1px solid var(--border-color);
@@ -359,7 +351,7 @@ main {
     color: white;
 }
 
-/* Form */
+/* форма */
 .form-control {
     border: 1px solid var(--border-color);
     border-radius: 4px;
@@ -371,7 +363,7 @@ main {
     box-shadow: 0 0 0 2px rgba(37, 87, 167, 0.1);
 }
 
-/* About Page */
+/* страница о нас */
 .about-page {
     max-width: 1200px;
     margin: 0 auto;
@@ -448,7 +440,7 @@ main {
     transform: translateY(-5px);
 }
 
-/* Media Queries */
+/* Адаптивность к мобилкам */
 @media (max-width: 768px) {
     .hero-section {
         padding: 1.5rem 0;
@@ -469,7 +461,7 @@ main {
     }
 }
 
-/* Logo Placeholder */
+/* логотип */
 .logo {
     height: 40px;
     width: auto;
@@ -490,7 +482,7 @@ main {
     font-size: 1.2rem;
 }
 
-/* Logo */
+/* логотип */
 .navbar-brand.logo {
     color: var(--primary-color);
     font-weight: 800;

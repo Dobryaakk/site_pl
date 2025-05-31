@@ -26,19 +26,17 @@ def index():
         post['read_time'] = estimate_read_time(post.get('content', ''))
         post['formatted_date'] = format_date_ru(post['created_at'])
         post['id'] = str(post['_id'])
-        post['views'] = post.get('views', 0)  # Add view counter
+        post['views'] = post.get('views', 0)
     return render_template('blog.html', posts=posts)
 
 @bp.route('/<post_id>')
 def view_post(post_id):
     try:
-        # Increment view counter first
         mongo.db.posts.update_one(
             {'_id': ObjectId(post_id)},
             {'$inc': {'views': 1}}
         )
         
-        # Then get the updated post
         post = Post.get_post(mongo, post_id)
         if post:
             post['read_time'] = estimate_read_time(post.get('content', ''))
