@@ -1,22 +1,86 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="{{ g.lang_code|default('ru') }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Top-Staff - Кадровое агентство по трудоустройству в Польше</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/vacancies.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/legalization.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v='1.0.0') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vacancies.css', v='1.0.0') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/legalization.css', v='1.0.0') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .navbar-brand img {
+            height: 50px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+        .navbar-brand img:hover {
+            transform: scale(1.05);
+        }
+        .navbar-brand .logo-full {
+            display: inline-block;
+        }
+        .navbar-brand .logo-sygnet {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .navbar-brand .logo-full {
+                display: none;
+            }
+            .navbar-brand .logo-sygnet {
+                display: inline-block;
+                height: 45px;
+            }
+        }
+        .lang-switcher {
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+        }
+        
+        .lang-switcher .lang-link {
+            color: #666;
+            text-decoration: none;
+            padding: 5px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .lang-switcher .lang-link:hover {
+            color: #007bff;
+            background: rgba(0,123,255,0.1);
+        }
+        
+        .lang-switcher .lang-link.active {
+            color: #007bff;
+            background: rgba(0,123,255,0.1);
+            font-weight: 600;
+        }
+        
+        .lang-switcher .separator {
+            color: #ddd;
+            margin: 0 2px;
+        }
+
+        @media (max-width: 768px) {
+            .lang-switcher {
+                margin: 10px 0;
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 <body>
     <header class="header">
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a class="navbar-brand logo" href="{{ url_for('main.index') }}">
-                    Top-Staff
+                <a class="navbar-brand" href="{{ url_for('main.index') }}">
+                    <img src="{{ url_for('static', filename='img/logo.png', v='1.0.0') }}" alt="Top-Staff" class="logo-full">
+                    <img src="{{ url_for('static', filename='img/sygnet.jpeg', v='1.0.0') }}" alt="Top-Staff" class="logo-sygnet">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
@@ -36,9 +100,22 @@
                             <a class="nav-link" href="{{ url_for('blog.index') }}">Блог</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('main.faq') }}">FAQ</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('main.contact') }}">Контакты</a>
                         </li>
                     </ul>
+                    <div class="lang-switcher">
+                        <a href="{{ url_for(request.endpoint, lang_code='ru', **request.view_args|default({})) }}" 
+                           class="lang-link {{ 'active' if g.lang_code|default('ru') == 'ru' }}">RU</a>
+                        <span class="separator">|</span>
+                        <a href="{{ url_for(request.endpoint, lang_code='pl', **request.view_args|default({})) }}" 
+                           class="lang-link {{ 'active' if g.lang_code == 'pl' }}">PL</a>
+                        <span class="separator">|</span>
+                        <a href="{{ url_for(request.endpoint, lang_code='ua', **request.view_args|default({})) }}" 
+                           class="lang-link {{ 'active' if g.lang_code == 'ua' }}">UA</a>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -52,7 +129,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <p>&copy; 2024 Top-Staff. Все права защищены.</p>
+                    <p>&copy; 2024 shit. Все права защищены.</p>
                 </div>
                 <div class="col-md-6 text-end">
                     <a href="#" class="footer-link me-3">Политика конфиденциальности</a>

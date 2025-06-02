@@ -20,4 +20,8 @@ def vacancies():
 
 @bp.route('/legalization')
 def legalization():
-    return render_template('legalization.html') 
+    return render_template('legalization.html')
+
+@bp.route('/faq')
+def faq():
+    return render_template('faq.html') 
